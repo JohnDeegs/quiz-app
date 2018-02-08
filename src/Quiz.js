@@ -1,48 +1,40 @@
-import React, { Component } from 'react';
+import React from 'react';
+import Question from './Components/Question';
+import QuestionCount from './Components/QuestionCount';
+import Answers from './Components/Answers';
 
-class Quiz extends Component {
+function Quiz(props) {
 
-    constructor(props){
-        super(props);
-        this.state = {
-            startBtnStatus: 'visible',
-            stage: 0,
-            question: "",
+    function renderAnswerOptions(key) {
+        return (
+          <Answers
+            key={key.content}
+            answerContent={key.content}
+            answerType={key.type}
+            answer={props.answer}
+            questionId={props.questionId}
+            onAnswerSelected={props.onAnswerSelected}
+          />
+        );
+      }
 
-        };
-        this.startQuiz = this.startQuiz.bind(this);
-        //this.handleButtonClick = this.handleButtonClick.bind(this);
-    }
+    return (
+        <div className="quiz">
+            <div className="well">
+                
+                <QuestionCount 
+                    counter={props.questionId}
+                    total={props.questionTotal}
+                />
 
-    startQuiz(){
-        this.setState({stage : 1});
-    }
+                <Question content={props.question}/>
 
-    componentWillMount(){
-        fetch('https://opentdb.com/api.php?amount=10').then(results => {
-            return results.json();
-        }).then(data => {
-            let questions = data.results;
-        });
-    }
-
-    render(){
-
-        if(this.state.stage === 1){
-            alert("I am 1");
-        }
-
-        return(
-            <div className="quiz">
-                <div className="well">
-                    <button onClick={this.startQuiz} className="btn btn-default">Start</button>
-                    <div className="question">
-
-                    </div>
-                </div>
+                <ul className="answerOptions">
+                    {props.answerOptions.map(renderAnswerOptions)}
+                </ul>
             </div>
-        )
-    }
+        </div>
+    )
 }
 
 export default Quiz;

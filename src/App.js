@@ -2,6 +2,20 @@ import React, { Component } from 'react';
 import Quiz from './Quiz';
 
 class App extends Component {
+
+  constructor(props){
+    super(props);
+
+    this.state = {
+      counter: 0,
+      questionId: 1,
+      question: '',
+      answers: [],
+      answer: [],
+      result: 0
+    }
+  }
+
   render() {
     return (
       <div className="App">
