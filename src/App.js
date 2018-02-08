@@ -16,6 +16,14 @@ class App extends Component {
     }
   }
 
+  componentWillMount(){
+    fetch('https://opentdb.com/api.php?amount=10').then(results => {
+        return results.json();
+    }).then(data => {
+        let questions = data.results;
+    });
+  }
+
   render() {
     return (
       <div className="App">
